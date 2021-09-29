@@ -1,13 +1,12 @@
 package uz.ziraatbank.pinger.entity;
 
-import lombok.Data;
-import lombok.Generated;
-
+import lombok.*;
 import javax.persistence.*;
 
 @Entity
 @Table(name = "ports")
 @Data
+@NoArgsConstructor
 public class Ports {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,15 +17,19 @@ public class Ports {
     private String ip;
 
     @Column(name = "port")
-    private String port;
-
-    @Column(name = "service_id")
-    private String serviceId;
+    private int port;
 
     @Column(name = "subservice")
     private String subservice;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//            @JoinColumn(name = "services_id", nullable = false)
-//    Services services;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "service_id")
+    private Services services;
+
+    public Ports(String ip, int port, String subservice){
+        this.ip = ip;
+        this.port = port;
+//        this.serviceId = serviceId;
+        this.subservice = subservice;
+    }
 }
