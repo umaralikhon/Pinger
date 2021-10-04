@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import uz.ziraatbank.pinger.entity.*;
 import uz.ziraatbank.pinger.service.*;
 import uz.ziraatbank.pinger.telegram.TelegaMsgSender;
-//import uz.ziraatbank.pinger.telegram.TelegaConfig;
 
 import java.io.*;
 import java.net.*;
@@ -16,7 +15,6 @@ import java.util.*;
 public class Ping {
     @Autowired
     private PortsService portsService;
-//    private ErrorMessages errors;
 
     @Autowired
     private ServicesService servicesService;
@@ -25,23 +23,36 @@ public class Ping {
     private List<Ports> portsList = new ArrayList<>();
     private int num = 1;
     public String message;
-    private TelegaMsgSender telega = new TelegaMsgSender();
+    private TelegaMsgSender telega;
 
     //TODO: this is working code!
+    //TODO: Should to check reconnection part!
     @Scheduled(fixedRate = 3000)
     public void pingPorts() throws IOException {
 
         portsList = portsService.getAll();
 
         for (Ports p : portsList) {
+            Date date = new Date();
+
+            telega = new TelegaMsgSender();
             try (Socket socket = new Socket(p.getIp(), p.getPort())) {
                 System.out.println("Success " + p.getServices().getServiceName() + " || " + p.getSubservice());
+
+                if (p.getServices().getActive() == false && socket.isConnected()) {
+                    message = "Server is connected";
+                    telega.setText(message);
+                    telega.setUrlFormat();
+                    telega.setUrl();
+                }
 
                 p.getServices().setActive(true);
                 portsService.save(p);
             } catch (ConnectException ex) {
-                message = "Error " + p.getServices().getServiceName() + " \t\t|| " + p.getIp() + "\t\t|| " +
-                        p.getPort() + "\t\t|| " + ErrorMessages.LOW_INET.getName() + " OR " + ErrorMessages.INVALID_PORT.getName();
+                message = "Error " + p.getServices().getServiceName() + " || " +
+                        " Ip: " + p.getIp() + " || " +
+                        " Port: " + p.getPort() + " || " +
+                        " Time: " + date;
 
                 telega.setText(message);
                 telega.setUrlFormat();
@@ -50,13 +61,14 @@ public class Ping {
                 p.getServices().setActive(false);
                 portsService.save(p);
 
-                System.out.println("Server is disconnected 0!");
-                System.out.println(message);
                 ex.getMessage();
 
             } catch (SocketException ex) {
-                message = "Error " + p.getServices().getServiceName() + " \t\t|| " + p.getSubservice() + "\t\t|| " +
-                        ErrorMessages.NET_CONNECT.getName() + " OR " + ErrorMessages.LOW_INET.getName();
+                message = "Error " + p.getServices().getServiceName() +
+                        "Ip: " + p.getIp() + " || " +
+                        "Port: " + p.getPort() + " || " +
+                        "Time: " + date;
+
                 p.getServices().setActive(false);
                 portsService.save(p);
 
@@ -64,15 +76,12 @@ public class Ping {
                 telega.setUrlFormat();
                 telega.setUrl();
 
-                System.out.println("Server is disconnected 2!");
-                System.out.println(message);
                 ex.getMessage();
             }
 
             try (FileWriter fw = new FileWriter("Logger.txt", true)) {
-                Date date = new Date();
 
-                if(message!=null) {
+                if (message != null) {
                     fw.write(num + ". " + message + " \t\t|| " + date);
                     fw.append('\n');
                     fw.flush();
@@ -82,7 +91,5 @@ public class Ping {
             }
             num++;
         }
-
-        System.out.println("====================================");
     }
 }
