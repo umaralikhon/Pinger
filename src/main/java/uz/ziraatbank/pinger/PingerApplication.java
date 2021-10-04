@@ -7,8 +7,7 @@ import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import uz.ziraatbank.pinger.telegram.TelegaConfig;
-import uz.ziraatbank.pinger.telnet.Ping;
-
+//import uz.ziraatbank.pinger.telegram.TelegaConfig;
 import java.io.IOException;
 
 @SpringBootApplication
@@ -19,15 +18,12 @@ public class PingerApplication {
         TelegaConfig myBot = new TelegaConfig();
         TelegramBotsApi telegramBot = new TelegramBotsApi(DefaultBotSession.class);
 
-        try{
+        try {
             telegramBot.registerBot(myBot);
-        }catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 
         SpringApplication.run(PingerApplication.class, args);
-
-        Ping ping = new Ping();
-        System.out.println(ping.pingPorts());
     }
 }

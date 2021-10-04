@@ -20,6 +20,7 @@ mvnw
 *.iml
 *.ipr
 *.cmd
+*.mvn
 
 ### NetBeans ###
 /nbproject/private/
@@ -30,6 +31,7 @@ mvnw
 build/
 !**/src/main/**/build/
 !**/src/test/**/build/
+/test/*/
 
 ### VS Code ###
 .vscode/

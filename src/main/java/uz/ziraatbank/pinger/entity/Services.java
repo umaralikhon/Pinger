@@ -23,7 +23,7 @@ public class Services {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "services", fetch = FetchType.EAGER)
     private List<Ports> ports;
 
-    public Services(String serviceName, Boolean active, Ports port){
+    public Services(String serviceName, Boolean active, Ports port) {
         this.serviceName = serviceName;
         this.active = active;
         port.setServices(this);

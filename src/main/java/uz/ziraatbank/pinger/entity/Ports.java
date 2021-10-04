@@ -26,10 +26,9 @@ public class Ports {
     @JoinColumn(name = "service_id")
     private Services services;
 
-    public Ports(String ip, int port, String subservice){
+    public Ports(String ip, int port, String subservice) {
         this.ip = ip;
         this.port = port;
-//        this.serviceId = serviceId;
         this.subservice = subservice;
     }
 }

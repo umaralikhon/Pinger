@@ -12,11 +12,11 @@ public class ServicesServiceImpl implements ServicesService {
     private ServicesRepository servicesRepository;
 
     @Autowired
-    public ServicesServiceImpl(ServicesRepository servicesRepository){
+    public ServicesServiceImpl(ServicesRepository servicesRepository) {
         this.servicesRepository = servicesRepository;
     }
 
-    public List<Services> getAll(){
+    public List<Services> getAll() {
         return servicesRepository.findAll();
     }
 }

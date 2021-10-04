@@ -12,12 +12,17 @@ public class PortsServiceImpl implements PortsService {
     private PortsRepository portsRepository;
 
     @Autowired
-    public PortsServiceImpl(PortsRepository portsRepository){
+    public PortsServiceImpl(PortsRepository portsRepository) {
         this.portsRepository = portsRepository;
     }
 
     @Override
-    public List<Ports> getAll(){
+    public List<Ports> getAll() {
         return portsRepository.findAll();
+    }
+
+    @Override
+    public void save(Ports port){
+        portsRepository.save(port);
     }
 }
