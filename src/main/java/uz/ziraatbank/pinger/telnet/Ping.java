@@ -40,29 +40,28 @@ public class Ping {
                 System.out.println("Success " + p.getServices().getServiceName() + " || " + p.getSubservice());
 
                 if (p.getServices().getActive() == false && socket.isConnected()) {
-                    message = "Server is connected";
-                    telega.setText(message);
-                    telega.setUrlFormat();
-                    telega.setUrl();
+                    message = "Server is connected: " +
+                            " Service: " + p.getServices().getServiceName() + " || " +
+                            " Subservice: " + p.getSubservice() + " || " +
+                            " Ip: " + p.getIp() + " || " +
+                            " Port: " + p.getPort() + " || " +
+                            " Time: " + date;;
+                    telega.setUrl(message);
                 }
 
                 p.getServices().setActive(true);
                 portsService.save(p);
             } catch (ConnectException ex) {
                 message = "Error " + p.getServices().getServiceName() + " || " +
+                        " Subservice: " + p.getSubservice() + " || " +
                         " Ip: " + p.getIp() + " || " +
                         " Port: " + p.getPort() + " || " +
                         " Time: " + date;
 
-                telega.setText(message);
-                telega.setUrlFormat();
-                telega.setUrl();
-
+                telega.setUrl(message);
                 p.getServices().setActive(false);
                 portsService.save(p);
-
                 ex.getMessage();
-
             } catch (SocketException ex) {
                 message = "Error " + p.getServices().getServiceName() +
                         "Ip: " + p.getIp() + " || " +
@@ -71,11 +70,7 @@ public class Ping {
 
                 p.getServices().setActive(false);
                 portsService.save(p);
-
-                telega.setText(message);
-                telega.setUrlFormat();
-                telega.setUrl();
-
+                telega.setUrl(message);
                 ex.getMessage();
             }
 
