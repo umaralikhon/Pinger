@@ -1,8 +1,6 @@
 package uz.ziraatbank.pinger.entity;
 
 import lombok.Data;
-import lombok.Generated;
-
 import javax.persistence.*;
 
 @Entity

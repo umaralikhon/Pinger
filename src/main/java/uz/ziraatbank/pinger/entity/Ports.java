@@ -22,13 +22,21 @@ public class Ports {
     @Column(name = "subservice")
     private String subservice;
 
+    @Column(name = "active")
+    public Boolean active;
+
+    @Column(name = "counter")
+    private int counter;
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "service_id")
     private Services services;
 
-    public Ports(String ip, int port, String subservice) {
+    public Ports(String ip, int port, String subservice, Boolean active, int counter) {
         this.ip = ip;
         this.port = port;
         this.subservice = subservice;
+        this.active = active;
+        this.counter = counter;
     }
 }

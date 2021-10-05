@@ -17,15 +17,11 @@ public class Services {
     @Column(name = "service_name")
     private String serviceName;
 
-    @Column(name = "is_active")
-    private Boolean active;
-
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "services", fetch = FetchType.EAGER)
     private List<Ports> ports;
 
-    public Services(String serviceName, Boolean active, Ports port) {
+    public Services(String serviceName, Ports port) {
         this.serviceName = serviceName;
-        this.active = active;
         port.setServices(this);
     }
 }
