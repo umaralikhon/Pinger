@@ -50,11 +50,6 @@ public class Ping {
                     telega.setUrl(message);
                 }
 
-                //////////////////////////////////
-                message = "Success!";////////////
-                telega.setUrl(message);/////////
-                ///////////////////////////////
-
                 p.setActive(true);
                 portsService.save(p);
 

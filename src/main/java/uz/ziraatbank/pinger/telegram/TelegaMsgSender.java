@@ -10,7 +10,6 @@ import java.net.URLConnection;
 @Data
 @NoArgsConstructor
 public class TelegaMsgSender {
-    private String urlString = "https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s";
     private String token = "2012688061:AAGAKCuvyjWB3J2LG4WS8zpN8FAhI4KzVwU";
     private String[] chatId;
     private String text;
@@ -26,16 +25,21 @@ public class TelegaMsgSender {
         this.text = text;
 
         for (int i = 0; i < chatId.length; i++) {
+            String urlString = "https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s";
+
             urlString = String.format(urlString, token, chatId[i], text);
             url = new URL(urlString);
             conn = url.openConnection();
+            sb = new StringBuilder();
+            is = new BufferedInputStream(conn.getInputStream());
+            br = new BufferedReader(new InputStreamReader(is));
+            inputLine = br.readLine();
+            sb.append(inputLine);
+
         }
 
-        sb = new StringBuilder();
-        is = new BufferedInputStream(conn.getInputStream());
-        br = new BufferedReader(new InputStreamReader(is));
-        inputLine = br.readLine();
-        sb.append(inputLine);
+
+
 
 //        String response = sb.toString();
 //        System.out.println(response);
