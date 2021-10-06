@@ -13,8 +13,8 @@ public class Ports {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "ip")
-    private String ip;
+    @Column(name = "host")
+    private String host;
 
     @Column(name = "port")
     private int port;
@@ -32,8 +32,8 @@ public class Ports {
     @JoinColumn(name = "service_id")
     private Services services;
 
-    public Ports(String ip, int port, String subservice, Boolean active, int counter) {
-        this.ip = ip;
+    public Ports(String host, int port, String subservice, Boolean active, int counter) {
+        this.host = host;
         this.port = port;
         this.subservice = subservice;
         this.active = active;

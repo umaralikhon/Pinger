@@ -26,7 +26,7 @@ public class TelegaMsgSender {
     private List<Users> usersList;
 
     public void setUrl(String text) throws IOException {
-        chatId = new String[]{"-402458147", "1878896080", "1642507256"};
+        chatId = new String[]{"-1001305998309", "1878896080", "1642507256"};
         this.text = text;
 
         for (int i = 0; i < chatId.length; i++) {

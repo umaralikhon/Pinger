@@ -34,14 +34,14 @@ public class Ping {
             Date date = new Date();
             telega = new TelegaMsgSender();
 
-            try (Socket socket = new Socket(p.getIp(), p.getPort())) {
+            try (Socket socket = new Socket(p.getHost(), p.getPort())) {
                 System.out.println("Success " + p.getServices().getServiceName() + " || " + p.getSubservice());
 
                 if (p.getActive() == false && socket.isConnected()) {
                     message = "Server is connected: " +
                             " Service: " + p.getServices().getServiceName() + " || " +
                             " Subservice: " + p.getSubservice() + " || " +
-                            " Ip: " + p.getIp() + " || " +
+                            " Ip: " + p.getHost() + " || " +
                             " Port: " + p.getPort() + " || " +
                             " Time: " + date;
                     p.setCounter(0);
@@ -58,9 +58,10 @@ public class Ping {
 
                 if (p.getCounter() == 3) {
                     p.setActive(false);
-                    message = "Server disconnected! " + p.getServices().getServiceName() + " || " +
+                    message = "Server disconnected! " +
+                            " Server " + p.getServices().getServiceName() + " || " +
                             " Subservice: " + p.getSubservice() + " || " +
-                            " Ip: " + p.getIp() + " || " +
+                            " Ip: " + p.getHost() + " || " +
                             " Port: " + p.getPort() + " || " +
                             " Time: " + date;
                     telega.setUrl(message);
@@ -83,9 +84,10 @@ public class Ping {
 
                 if (p.getCounter() == 3) {
                     p.setActive(false);
-                    message = "Server disconnected! " + p.getServices().getServiceName() + " || " +
+                    message = "Server disconnected! " +
+                            " Server " + p.getServices().getServiceName() + " || " +
                             " Subservice: " + p.getSubservice() + " || " +
-                            " Ip: " + p.getIp() + " || " +
+                            " Ip: " + p.getHost() + " || " +
                             " Port: " + p.getPort() + " || " +
                             " Time: " + date;
                     telega.setUrl(message);
