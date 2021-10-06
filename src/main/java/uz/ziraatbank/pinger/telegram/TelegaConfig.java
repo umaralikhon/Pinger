@@ -43,9 +43,9 @@ public final class TelegaConfig extends TelegramLongPollingBot {
             String text = update.getMessage().getText();
             String emoji = EmojiParser.parseToUnicode(":stuck_out_tongue_winking_eye:");
 
-            if (text.equals("/start")) {
+            if (text.equals("/chatid")) {
                 sendMessage.setChatId(String.valueOf(update.getMessage().getChatId()));
-                sendMessage.setText("You subscribed, so You will get error messages " + emoji);
+                sendMessage.setText("Chat ID: " + chatId + emoji);
 
                 try {
                     execute(sendMessage);
@@ -53,8 +53,6 @@ public final class TelegaConfig extends TelegramLongPollingBot {
                     ex.printStackTrace();
                 }
             }
-//            user.setChatId(String.valueOf(chatId));
-//            usersService.save(user);
         }
     }
 }

@@ -24,10 +24,8 @@ public class Ping {
     private int num = 1;
     public String message = "";
     private TelegaMsgSender telega;
-//    int count = 0;
 
     //TODO: this is working code!
-    //TODO: Should to check reconnection part!
     @Scheduled(fixedRate = 5000)
     public void pingPorts() throws IOException {
         portsList = portsService.getAll();
