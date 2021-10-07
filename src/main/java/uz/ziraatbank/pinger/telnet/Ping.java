@@ -1,5 +1,6 @@
 package uz.ziraatbank.pinger.telnet;
 
+import com.vdurmont.emoji.EmojiParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -29,6 +30,14 @@ public class Ping {
     @Scheduled(fixedRate = 5000)
     public void pingPorts() throws IOException {
         portsList = portsService.getAll();
+        String screamEmoji = "\uD83D\uDE31";
+        String serviceEmoji = "\uD83C\uDF10";
+        String subServiceEmoji = "\uD83E\uDE99";
+        String hostEmoji = "\uD83D\uDD17";
+        String portEmoji = "\uD83D\uDCE5";
+        String timeEmoji = "\uD83D\uDD54";
+        String connectEmoji = "\uD83D\uDE0E";
+
 
         for (Ports p : portsList) {
             Date date = new Date();
@@ -37,13 +46,15 @@ public class Ping {
             try (Socket socket = new Socket(p.getHost(), p.getPort())) {
                 System.out.println("Success " + p.getServices().getServiceName() + " || " + p.getSubservice());
 
+                //Тут %0A == \n
                 if (p.getActive() == false && socket.isConnected()) {
-                    message = "Server is connected: " +
-                            " Service: " + p.getServices().getServiceName() + " || " +
-                            " Subservice: " + p.getSubservice() + " || " +
-                            " Ip: " + p.getHost() + " || " +
-                            " Port: " + p.getPort() + " || " +
-                            " Time: " + date;
+                    message =
+                            connectEmoji + "The server is up" + connectEmoji + "%0A" +
+                            serviceEmoji + "Service: " + p.getServices().getServiceName() + "%0A" +
+                                    subServiceEmoji + "Subservice: " + p.getSubservice() + "%0A" +
+                            hostEmoji + "Host: " + p.getHost() + "%0A" +
+                            portEmoji + "Port: " + p.getPort() + "%0A" +
+                            timeEmoji + "Time: " + date;
                     p.setCounter(0);
                     telega.setUrl(message);
                 }
@@ -58,12 +69,14 @@ public class Ping {
 
                 if (p.getCounter() == 3) {
                     p.setActive(false);
-                    message = "Server disconnected! " +
-                            " Server " + p.getServices().getServiceName() + " || " +
-                            " Subservice: " + p.getSubservice() + " || " +
-                            " Ip: " + p.getHost() + " || " +
-                            " Port: " + p.getPort() + " || " +
-                            " Time: " + date;
+                    message =
+                            screamEmoji + "The server crashed" + screamEmoji + "%0A"+
+                            serviceEmoji + "Server: " + p.getServices().getServiceName() + "%0A" +
+                            subServiceEmoji + "Subservice: " + p.getSubservice() + "%0A" +
+                            hostEmoji + "Host: " + p.getHost() + "%0A" +
+                            portEmoji + "Port: " + p.getPort() + "%0A" +
+                            timeEmoji + "Time: " + date;
+
                     telega.setUrl(message);
                 }
 
@@ -84,12 +97,13 @@ public class Ping {
 
                 if (p.getCounter() == 3) {
                     p.setActive(false);
-                    message = "Server disconnected! " +
-                            " Server " + p.getServices().getServiceName() + " || " +
-                            " Subservice: " + p.getSubservice() + " || " +
-                            " Ip: " + p.getHost() + " || " +
-                            " Port: " + p.getPort() + " || " +
-                            " Time: " + date;
+                    message =
+                            screamEmoji + "The server crashed" + screamEmoji +"%0A"+
+                            serviceEmoji + "Server: " + p.getServices().getServiceName() + "%0A" +
+                            subServiceEmoji + " Subservice: " + p.getSubservice() + "%0A" +
+                            hostEmoji + "Host: " + p.getHost() + "%0A" +
+                            portEmoji + "Port: " + p.getPort() + "%0A" +
+                            timeEmoji + "Time: " + date;
                     telega.setUrl(message);
                 }
 
