@@ -1,5 +1,6 @@
 package uz.ziraatbank.pinger.telnet;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -15,12 +16,11 @@ public class Ping {
     @Autowired
     private PortsService portsService;
 
-    @Autowired
-    private ServicesService servicesService;
+    private String logId;
+    private static final Logger LOG = Logger.getLogger(Ping.class);
 
     private Ports ports = null;
     private List<Ports> portsList = new ArrayList<>();
-    private int num = 1;
     public String message = "";
     private TelegaMsgSender telega;
 
@@ -39,6 +39,7 @@ public class Ping {
         for (Ports p : portsList) {
             Date date = new Date();
             telega = new TelegaMsgSender();
+            logId = UUID.randomUUID().toString();
 
             try (Socket socket = new Socket(p.getHost(), p.getPort())) {
                 System.out.println("Success " + p.getServices().getServiceName() + " || " + p.getSubservice());
@@ -48,8 +49,8 @@ public class Ping {
                     message = serviceEmoji + "Service: " + p.getServices().getServiceName() + "%0A" +
                                     statusEmoji + "Status: Up " + upEmoji + "%0A" +
                                     dateEmoji + "Date: " + date + "%0A" +
-                                    logIdEmoji + "LogID: " + "There will be Log ID" + "%0A" +
-                                    descEmoji + "Desc: " + p.getHost() + " started at port " + p.getPort();
+                                    logIdEmoji + "LogID: " + logId + "%0A" +
+                                    descEmoji + "Desc: " + p.getHost() + " STARTED at port " + p.getPort();
 
                     p.setCounter(0);
                     telega.setUrl(message);
@@ -57,6 +58,7 @@ public class Ping {
 
                 p.setActive(true);
                 portsService.save(p);
+                LOG.info(logId + ": SUCCESS: " + p.getServices().getServiceName() + " || " + p.getPort() + " || " + p.getHost());
 
             } catch (ConnectException ex) {
                 int count = p.getCounter();
@@ -69,8 +71,8 @@ public class Ping {
                     message = serviceEmoji + "Service: " + p.getServices().getServiceName() + "%0A" +
                             statusEmoji + "Status: Down " + downEmoji + "%0A" +
                             dateEmoji + "Date: " + date + "%0A" +
-                            logIdEmoji + "LogID: " + "There will be Log ID" + "%0A" +
-                            descEmoji + "Desc: " + p.getHost() + " downed at port " + p.getPort();
+                            logIdEmoji + "LogID: " + logId + "%0A" +
+                            descEmoji + "Desc: " + p.getHost() + " DOWNED at port " + p.getPort();
 
                     telega.setUrl(message);
                 }
@@ -83,19 +85,9 @@ public class Ping {
 
                 portsService.save(p);
                 ex.getMessage();
+                LOG.error(logId + ": ERROR: " + p.getServices().getServiceName() + " || " + p.getPort() + " || " +
+                        p.getHost() + " || " + ex.getMessage());
             }
-
-            try (FileWriter fw = new FileWriter("Logger.txt", true)) {
-
-                if (message != null) {
-                    fw.write(num + ". " + message + " \t\t|| " + date);
-                    fw.append('\n');
-                    fw.flush();
-                }
-            } catch (IOException ex) {
-                ex.getCause();
-            }
-            num++;
         }
     }
 }
