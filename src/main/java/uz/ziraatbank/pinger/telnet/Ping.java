@@ -1,13 +1,11 @@
 package uz.ziraatbank.pinger.telnet;
 
-import com.vdurmont.emoji.EmojiParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import uz.ziraatbank.pinger.entity.*;
 import uz.ziraatbank.pinger.service.*;
 import uz.ziraatbank.pinger.telegram.TelegaMsgSender;
-
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -26,18 +24,17 @@ public class Ping {
     public String message = "";
     private TelegaMsgSender telega;
 
-    //TODO: this is working code!
     @Scheduled(fixedRate = 5000)
     public void pingPorts() throws IOException {
-        portsList = portsService.getAll();
-        String screamEmoji = "\uD83D\uDE31";
-        String serviceEmoji = "\uD83C\uDF10";
-        String subServiceEmoji = "\uD83E\uDE99";
-        String hostEmoji = "\uD83D\uDD17";
-        String portEmoji = "\uD83D\uDCE5";
-        String timeEmoji = "\uD83D\uDD54";
-        String connectEmoji = "\uD83D\uDE0E";
+        String serviceEmoji = "\uD83D\uDCCC";
+        String statusEmoji = "\uD83D\uDEA9";
+        String upEmoji = "✅";
+        String dateEmoji = "\uD83D\uDCC5";
+        String logIdEmoji = "\uD83D\uDD0D";
+        String descEmoji = "\uD83D\uDCDD";
+        String downEmoji = "❌";
 
+        portsList = portsService.getAll();
 
         for (Ports p : portsList) {
             Date date = new Date();
@@ -48,13 +45,12 @@ public class Ping {
 
                 //Тут %0A == \n
                 if (p.getActive() == false && socket.isConnected()) {
-                    message =
-                            connectEmoji + "The server is up" + connectEmoji + "%0A" +
-                            serviceEmoji + "Service: " + p.getServices().getServiceName() + "%0A" +
-                                    subServiceEmoji + "Subservice: " + p.getSubservice() + "%0A" +
-                            hostEmoji + "Host: " + p.getHost() + "%0A" +
-                            portEmoji + "Port: " + p.getPort() + "%0A" +
-                            timeEmoji + "Time: " + date;
+                    message = serviceEmoji + "Service: " + p.getServices().getServiceName() + "%0A" +
+                                    statusEmoji + "Status: Up " + upEmoji + "%0A" +
+                                    dateEmoji + "Date: " + date + "%0A" +
+                                    logIdEmoji + "LogID: " + "There will be Log ID" + "%0A" +
+                                    descEmoji + "Desc: " + p.getHost() + " started at port " + p.getPort();
+
                     p.setCounter(0);
                     telega.setUrl(message);
                 }
@@ -69,46 +65,17 @@ public class Ping {
 
                 if (p.getCounter() == 3) {
                     p.setActive(false);
-                    message =
-                            screamEmoji + "The server crashed" + screamEmoji + "%0A"+
-                            serviceEmoji + "Server: " + p.getServices().getServiceName() + "%0A" +
-                            subServiceEmoji + "Subservice: " + p.getSubservice() + "%0A" +
-                            hostEmoji + "Host: " + p.getHost() + "%0A" +
-                            portEmoji + "Port: " + p.getPort() + "%0A" +
-                            timeEmoji + "Time: " + date;
+
+                    message = serviceEmoji + "Service: " + p.getServices().getServiceName() + "%0A" +
+                            statusEmoji + "Status: Down " + downEmoji + "%0A" +
+                            dateEmoji + "Date: " + date + "%0A" +
+                            logIdEmoji + "LogID: " + "There will be Log ID" + "%0A" +
+                            descEmoji + "Desc: " + p.getHost() + " downed at port " + p.getPort();
 
                     telega.setUrl(message);
                 }
 
-                //Не трогать! Не зняю почему, но это нужная часть кода!
-                if(p.getCounter() >= 3){
-                    p.setActive(false);
-                }
-
-                System.out.println(count);//Debug
-
-                portsService.save(p);
-                ex.getMessage();
-            }
-            catch (SocketException ex) {
-                int count = p.getCounter();
-                count++;
-                p.setCounter(count);
-
-                if (p.getCounter() == 3) {
-                    p.setActive(false);
-                    message =
-                            screamEmoji + "The server crashed" + screamEmoji +"%0A"+
-                            serviceEmoji + "Server: " + p.getServices().getServiceName() + "%0A" +
-                            subServiceEmoji + " Subservice: " + p.getSubservice() + "%0A" +
-                            hostEmoji + "Host: " + p.getHost() + "%0A" +
-                            portEmoji + "Port: " + p.getPort() + "%0A" +
-                            timeEmoji + "Time: " + date;
-                    telega.setUrl(message);
-                }
-
-                //Не трогать! Не зняю почему, но это нужная часть кода!
-                if(p.getCounter() >= 3){
+                if (p.getCounter() >= 3) {
                     p.setActive(false);
                 }
 

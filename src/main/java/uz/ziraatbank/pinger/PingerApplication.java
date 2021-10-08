@@ -7,8 +7,11 @@ import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import uz.ziraatbank.pinger.telegram.TelegaConfig;
-//import uz.ziraatbank.pinger.telegram.TelegaConfig;
 import java.io.IOException;
+
+/**
+ * @Aauthor Umaralikhon Kayumov
+ */
 
 @SpringBootApplication
 @EnableScheduling
