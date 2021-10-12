@@ -13,13 +13,15 @@ import java.util.*;
 
 @Component
 public class Ping {
+    private final PortsService portsService;
+
     @Autowired
-    private PortsService portsService;
+    public Ping(PortsService portsService){
+        this.portsService = portsService;
+    }
 
     private String logId;
     private static final Logger LOG = Logger.getLogger(Ping.class);
-
-    private Ports ports = null;
     private List<Ports> portsList = new ArrayList<>();
     public String message = "";
     private TelegaMsgSender telega;
@@ -45,7 +47,7 @@ public class Ping {
                 System.out.println("Success " + p.getServices().getServiceName() + " || " + p.getSubservice());
 
                 //Тут %0A == \n
-                if (p.getActive() == false && socket.isConnected()) {
+                if (!p.getActive() && socket.isConnected()) {
                     message = serviceEmoji + "Service: " + p.getServices().getServiceName() + "%0A" +
                                     statusEmoji + "Status: Up " + upEmoji + "%0A" +
                                     dateEmoji + "Date: " + date + "%0A" +
