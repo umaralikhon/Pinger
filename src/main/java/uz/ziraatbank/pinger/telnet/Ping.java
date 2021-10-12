@@ -9,6 +9,9 @@ import uz.ziraatbank.pinger.service.*;
 import uz.ziraatbank.pinger.telegram.TelegaMsgSender;
 import java.io.*;
 import java.net.*;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Component
@@ -39,7 +42,8 @@ public class Ping {
         portsList = portsService.getAll();
 
         for (Ports p : portsList) {
-            Date date = new Date();
+            String date = LocalDate.now().toString();
+            String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
             telega = new TelegaMsgSender();
             logId = UUID.randomUUID().toString();
 
@@ -50,7 +54,7 @@ public class Ping {
                 if (!p.getActive() && socket.isConnected()) {
                     message = serviceEmoji + "Service: " + p.getServices().getServiceName() + "%0A" +
                                     statusEmoji + "Status: Up " + upEmoji + "%0A" +
-                                    dateEmoji + "Date: " + date + "%0A" +
+                                    dateEmoji + "Date: " + date + " " + time + "%0A" +
                                     logIdEmoji + "LogID: " + logId + "%0A" +
                                     descEmoji + "Desc: " + p.getHost() + " STARTED at port " + p.getPort();
 
@@ -72,7 +76,7 @@ public class Ping {
 
                     message = serviceEmoji + "Service: " + p.getServices().getServiceName() + "%0A" +
                             statusEmoji + "Status: Down " + downEmoji + "%0A" +
-                            dateEmoji + "Date: " + date + "%0A" +
+                            dateEmoji + "Date: " + date + " " + time + "%0A" +
                             logIdEmoji + "LogID: " + logId + "%0A" +
                             descEmoji + "Desc: " + p.getHost() + " DOWNED at port " + p.getPort();
 
