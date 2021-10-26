@@ -46,52 +46,52 @@ public class Ping {
             telega = new TelegaMsgSender();
             logId = UUID.randomUUID().toString();
 
-            try (Socket socket = new Socket(p.getHost(), p.getPort())) {
-                System.out.println("Success " + p.getServices().getServiceName() + " || " + p.getSubservice());
+            if (!p.getHandOff()) {
+                try (Socket socket = new Socket(p.getHost(), p.getPort())) {
+                    System.out.println("Success " + p.getServices().getServiceName() + " || " + p.getSubservice());
 
-                //Тут %0A == \n
-                if (!p.getActive() && socket.isConnected()) {
-                    message = serviceEmoji + "Service: " + p.getServices().getServiceName() + "%0A" +
-                                    statusEmoji + "Status: Up " + upEmoji + "%0A" +
-                                    dateEmoji + "Date: " + date + " " + time + "%0A" +
-                                    logIdEmoji + "LogID: " + logId + "%0A" +
-                                    descEmoji + "Desc: " + p.getHost() + " STARTED at port " + p.getPort();
+                    //Тут %0A == \n
+                    if (!p.getActive() && socket.isConnected()) {
+                        message = serviceEmoji + "Service: " + p.getServices().getServiceName() + "%0A" +
+                                statusEmoji + "Status: Up " + upEmoji + "%0A" +
+                                dateEmoji + "Date: " + date + " " + time + "%0A" +
+                                logIdEmoji + "LogID: " + logId + "%0A" +
+                                descEmoji + "Desc: " + p.getHost() + " STARTED at port " + p.getPort();
 
-                    p.setCounter(0);
-                    telega.setUrl(message);
+                        p.setCounter(0);
+                        telega.setUrl(message);
+                    }
+
+                    p.setActive(true);
+                    portsService.save(p);
+                    LOG.info(logId + ": SUCCESS: " + p.getServices().getServiceName() + " || " + p.getPort() + " || " + p.getHost());
+
+                } catch (ConnectException ex) {
+                    int count = p.getCounter();
+                    count++;
+                    p.setCounter(count);
+
+                    if (p.getCounter() == 3) {
+                        p.setActive(false);
+
+                        message = serviceEmoji + "Service: " + p.getServices().getServiceName() + "%0A" +
+                                statusEmoji + "Status: Down " + downEmoji + "%0A" +
+                                dateEmoji + "Date: " + date + " " + time + "%0A" +
+                                logIdEmoji + "LogID: " + logId + "%0A" +
+                                descEmoji + "Desc: " + p.getHost() + " DOWNED at port " + p.getPort();
+
+                        telega.setUrl(message);
+                    }
+
+                    if (p.getCounter() >= 3) {
+                        p.setActive(false);
+                    }
+
+                    portsService.save(p);
+                    ex.getMessage();
+                    LOG.error(logId + ": ERROR: " + p.getServices().getServiceName() + " || " + p.getPort() + " || " +
+                            p.getHost() + " || " + ex.getMessage());
                 }
-
-                p.setActive(true);
-                portsService.save(p);
-                LOG.info(logId + ": SUCCESS: " + p.getServices().getServiceName() + " || " + p.getPort() + " || " + p.getHost());
-
-            } catch (ConnectException ex) {
-                int count = p.getCounter();
-                count++;
-                p.setCounter(count);
-
-                if (p.getCounter() == 3) {
-                    p.setActive(false);
-
-                    message = serviceEmoji + "Service: " + p.getServices().getServiceName() + "%0A" +
-                            statusEmoji + "Status: Down " + downEmoji + "%0A" +
-                            dateEmoji + "Date: " + date + " " + time + "%0A" +
-                            logIdEmoji + "LogID: " + logId + "%0A" +
-                            descEmoji + "Desc: " + p.getHost() + " DOWNED at port " + p.getPort();
-
-                    telega.setUrl(message);
-                }
-
-                if (p.getCounter() >= 3) {
-                    p.setActive(false);
-                }
-
-                System.out.println(count);//Debug
-
-                portsService.save(p);
-                ex.getMessage();
-                LOG.error(logId + ": ERROR: " + p.getServices().getServiceName() + " || " + p.getPort() + " || " +
-                        p.getHost() + " || " + ex.getMessage());
             }
         }
     }
