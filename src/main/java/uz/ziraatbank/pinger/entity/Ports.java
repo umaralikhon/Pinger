@@ -28,6 +28,9 @@ public class Ports {
     @Column(name = "counter")
     private int counter;
 
+    @Column(name = "hand_off")
+    private Boolean handOff;
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "service_id")
     private Services services;
