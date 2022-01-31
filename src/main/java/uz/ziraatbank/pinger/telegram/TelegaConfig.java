@@ -2,28 +2,19 @@ package uz.ziraatbank.pinger.telegram;
 
 import com.vdurmont.emoji.EmojiParser;
 import lombok.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import uz.ziraatbank.pinger.entity.Users;
-import uz.ziraatbank.pinger.service.UsersService;
+import uz.ziraatbank.pinger.model.entity.Users;
 
 @Data
 @NoArgsConstructor
 public final class TelegaConfig extends TelegramLongPollingBot {
     private final String BOTNAME = "@pingerrbot";
     private final String TOKEN = "2012688061:AAGAKCuvyjWB3J2LG4WS8zpN8FAhI4KzVwU";
-    private UsersService usersService;
     private Users user = new Users();
     Long chatId = null;
-
-
-    @Autowired
-    public TelegaConfig(UsersService usersService) {
-        this.usersService = usersService;
-    }
 
     @Override
     public String getBotToken() {

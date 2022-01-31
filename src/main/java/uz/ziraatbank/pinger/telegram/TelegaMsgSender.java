@@ -2,7 +2,7 @@ package uz.ziraatbank.pinger.telegram;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import uz.ziraatbank.pinger.entity.Users;
+import uz.ziraatbank.pinger.model.entity.Users;
 
 import java.io.*;
 import java.net.URL;
