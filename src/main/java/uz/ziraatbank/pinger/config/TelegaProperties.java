@@ -1,4 +1,4 @@
-package uz.ziraatbank.pinger.properties;
+package uz.ziraatbank.pinger.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

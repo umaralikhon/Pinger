@@ -1,0 +1,48 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org ">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width initial-scale=1.0">
+    <title>Pinger</title>
+    <link th:href="@{/css/ping.css}" rel="stylesheet"/>
+
+</head>
+<body>
+<div id="title_name">
+    <h1>Pinger application</h1>
+</div>
+<div id="ping_table">
+    <table th:border="5px">
+        <th:block th:each="ports: ${ports}">
+            <tr>
+                <td th:text="${ports.serviceName}">SERVICE</td>
+                <td th:text="${ports.host}">HOST</td>
+                <td th:text="${ports.port}">PORT</td>
+                <td bgcolor="#00ffff">Graphic</td>
+
+                <div id="status" th:switch="${ports.status.name}">
+                    <div th:case="UP">
+                        <td bgcolor="#7cfc00">UP</td>
+                    </div>
+                    <div th:case="DOWN">
+                        <td bgcolor="red">DOWN</td>
+                    </div>
+                    <div th:case="OFF">
+                        <td bgcolor="gray">OFF</td>
+                    </div>
+                </div>
+            </tr>
+        </th:block>
+    </table>
+</div>
+
+<script>
+    setTimeout(function () {
+        window.location.reload(1);
+    }, 5000);
+</script>
+
+</body>
+</html>

@@ -1,4 +1,4 @@
-package uz.ziraatbank.pinger.properties;
+package uz.ziraatbank.pinger.config;
 
 public enum Status {
     UP,

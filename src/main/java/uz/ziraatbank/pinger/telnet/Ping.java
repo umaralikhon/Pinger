@@ -4,11 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import uz.ziraatbank.pinger.properties.Status;
+import uz.ziraatbank.pinger.config.Status;
 import uz.ziraatbank.pinger.model.entity.*;
 import uz.ziraatbank.pinger.model.service.*;
 import java.util.*;
-import static uz.ziraatbank.pinger.properties.Status.*;
+import static uz.ziraatbank.pinger.config.Status.*;
 
 @Component
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})

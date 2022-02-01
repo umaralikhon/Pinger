@@ -1,7 +1,7 @@
 package uz.ziraatbank.pinger.model.entity;
 
 import lombok.*;
-import uz.ziraatbank.pinger.properties.Status;
+import uz.ziraatbank.pinger.config.Status;
 
 import javax.persistence.*;
 

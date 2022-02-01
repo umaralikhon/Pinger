@@ -1,0 +1,16 @@
+#status{
+    width: 50%;
+    border-radius: 10px;
+}
+
+#ping_table{
+    width: 95%
+}
+
+#title_name{
+        text-align: center;
+}
+
+.td{
+    background-color: aquamarine;
+}
