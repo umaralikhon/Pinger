@@ -24,11 +24,16 @@ public class Ping {
             int attempt = p.getAttempt();
 
             if (p.getStatus() != OFF) {
+
+                Long start = System.currentTimeMillis();
                 Status connect = connection.tryConnect(p.getHost(), p.getPort());
+                Long end = System.currentTimeMillis();
+                Double timeOfResponse = Double.valueOf(end - start)/1000;
 
                 if (connect == DOWN) {
                     p.setAttempt(attempt + 1);
                     p.setStatus(DOWN);
+                    p.setTime(timeOfResponse);
                     portsService.save(p);
 
                     System.out.println(p.getServiceName() + " " + p.getHost() + " " + p.getPort() + " " + "DOWN");
@@ -36,6 +41,7 @@ public class Ping {
                 } else if (connect == UP) {
                     p.setAttempt(0);
                     p.setStatus(UP);
+                    p.setTime(timeOfResponse);
                     portsService.save(p);
 
                     System.out.println(p.getServiceName() + " " + p.getHost() + " " + p.getPort() + " " + "UP");

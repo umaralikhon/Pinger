@@ -30,4 +30,7 @@ public class Ports {
 
     @Column(name = "status")
     private Status status;
+
+    @Column(name = "time")
+    private Double time;
 }

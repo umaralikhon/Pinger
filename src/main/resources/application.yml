@@ -12,11 +12,6 @@ spring:
     generate-ddl: on
     hibernate:
       ddl-auto: update
-  thymeleaf:
-    enabled: on
-    cache: on
-    prefix: 'classpath:/templates/'
-    suffix: '.html'
 
 telega:
   token: '2012688061:AAGAKCuvyjWB3J2LG4WS8zpN8FAhI4KzVwU'

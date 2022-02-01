@@ -1,4 +1,4 @@
-<html xmlns:th="http://www.thymeleaf.org" lang="en"
+<html xmlns:th="http://www.thymeleaf.org" xmlns:background-color="http://www.w3.org/1999/xhtml" lang="en"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.thymeleaf.org ">
 
@@ -7,32 +7,42 @@
     <meta name="viewport" content="width=device-width initial-scale=1.0">
     <title>Pinger</title>
     <link th:href="@{/css/ping.css}" rel="stylesheet"/>
+    <link th:href="@{/css/TableDesign.css}" rel="stylesheet"/>
+    <link th:href="@{/css/status.css}" rel="stylesheet"/>
 
 </head>
 <body>
 <div id="title_name">
     <h1>Pinger application</h1>
 </div>
-<div id="ping_table">
-    <table th:border="5px">
+<div>
+    <table id="ping_table" th:border="5px">
+        <tr>
+                <th class="table_head">Name</th>
+                <th class="table_head">Host</th>
+                <th class="table_head">Port</th>
+                <th class="table_head">Status</th>
+                <th class="table_head">Timeout</th>
+        </tr>
         <th:block th:each="ports: ${ports}">
             <tr>
-                <td th:text="${ports.serviceName}">SERVICE</td>
-                <td th:text="${ports.host}">HOST</td>
-                <td th:text="${ports.port}">PORT</td>
-                <td bgcolor="#00ffff">Graphic</td>
+                <td id="service_td" th:text="${ports.serviceName}" bgcolor="#6495ed">SERVICE</td>
+                <td id="host_td" th:text="${ports.host}">HOST</td>
+                <td id="port_td" th:text="${ports.port}">PORT</td>
 
-                <div id="status" th:switch="${ports.status.name}">
-                    <div th:case="UP">
-                        <td bgcolor="#7cfc00">UP</td>
-                    </div>
-                    <div th:case="DOWN">
-                        <td bgcolor="red">DOWN</td>
-                    </div>
-                    <div th:case="OFF">
-                        <td bgcolor="gray">OFF</td>
-                    </div>
-                </div>
+                <th:block id="status" th:switch="${ports.status.name}">
+                    <th:block id="status_up" th:case="UP">
+                        <td class="stat" bgcolor="#7cfc00">UP</td>
+                    </th:block>
+                    <th:block id="status_down" th:case="DOWN">
+                        <td class="stat" bgcolor="red">DOWN</td>
+                    </th:block>
+                    <th:block id="status_off" th:case="OFF">
+                        <td class="stat" bgcolor="gray">OFF</td>
+                    </th:block>
+                </th:block>
+                <td id="time_td" th:text="${ports.time}">0.0</td>
+                <td id="graphic_td">Graphic</td>
             </tr>
         </th:block>
     </table>
