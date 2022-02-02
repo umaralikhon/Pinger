@@ -1,4 +1,5 @@
-<html xmlns:th="http://www.thymeleaf.org" xmlns:background-color="http://www.w3.org/1999/xhtml" lang="en"
+<html xmlns:th="http://www.thymeleaf.org" xmlns:background-color="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://www.w3.org/1999/xhtml" lang="en"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.thymeleaf.org ">
 
@@ -18,11 +19,11 @@
 <div>
     <table id="ping_table" th:border="5px">
         <tr>
-                <th class="table_head">Name</th>
-                <th class="table_head">Host</th>
-                <th class="table_head">Port</th>
-                <th class="table_head">Status</th>
-                <th class="table_head">Timeout</th>
+            <th class="table_head">Name</th>
+            <th class="table_head">Host</th>
+            <th class="table_head">Port</th>
+            <th class="table_head">Status</th>
+            <th class="table_head">Timeout</th>
         </tr>
         <th:block th:each="ports: ${ports}">
             <tr>
@@ -42,11 +43,16 @@
                     </th:block>
                 </th:block>
                 <td id="time_td" th:text="${ports.time}">0.0</td>
-                <td id="graphic_td">Graphic</td>
             </tr>
         </th:block>
     </table>
 </div>
+<br>
+<div>
+    <input class="button" type="button" value="Add" onclick="window.location.href='add-service'">
+    <input class="button" type="button" value="Delete" onclick="window.location.href='delete-service'">
+</div>
+
 
 <script>
     setTimeout(function () {

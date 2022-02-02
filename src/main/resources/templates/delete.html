@@ -1,0 +1,22 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:background-color="http://www.w3.org/1999/xhtml"
+      xmlns:form="http://www.w3.org/1999/xhtml" lang="en"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org ">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width initial-scale=1.0">
+    <title>Delete-Service</title>
+</head>
+<body>
+
+<form action="delete" modelAttribute="deletingService" method="post">
+    <label>Host:</label><br>
+    <input type="text" path="host" name="host"><br>
+    <label>Port:</label><br>
+    <input type="text" path="port" name="port"><br><br>
+    <input type="submit" value="Ok">
+</form>
+
+</body>
+</html>

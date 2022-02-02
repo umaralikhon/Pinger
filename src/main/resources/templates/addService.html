@@ -1,0 +1,27 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:background-color="http://www.w3.org/1999/xhtml"
+      xmlns:form="http://www.w3.org/1999/xhtml" lang="en"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org ">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width initial-scale=1.0">
+    <link th:href="@{/css/ping.css}" rel="stylesheet"/>
+    <title>Add-Service</title>
+</head>
+<body>
+
+<div class="addForm">
+    <form action="save-service" modelAttribute="service" method="post">
+        <label>Service name:</label><br>
+        <input type="text" path="serviceName" name="serviceName"><br>
+        <label>Host:</label><br>
+        <input type="text" path="host" name="host"><br>
+        <label>Port:</label><br>
+        <input type="text" path="port" name="port"><br><br>
+        <input type="submit" value="Ok">
+    </form>
+</div>
+
+</body>
+</html>

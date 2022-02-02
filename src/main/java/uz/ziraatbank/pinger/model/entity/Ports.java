@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "ports")
 @Data
-@NoArgsConstructor
+@AllArgsConstructor
 public class Ports {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,4 +33,18 @@ public class Ports {
 
     @Column(name = "time")
     private Double time;
+
+    public Ports(){
+        this.attempt = 0;
+        this.status = Status.DOWN;
+        this.time = 0.0;
+    }
+
+
+    public Ports(String serviceName, String host, Integer port){
+        this();
+        this.serviceName = serviceName;
+        this.host = host;
+        this.port = port;
+    }
 }
