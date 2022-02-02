@@ -79,6 +79,14 @@
         </dependency>
     </dependencies>
 
+    <distributionManagement>
+        <repository>
+            <id>releases</id>
+            <name>Internal repo</name>
+            <url>file://Ziraat/Pinger</url>
+        </repository>
+    </distributionManagement>
+
     <build>
         <plugins>
             <plugin>

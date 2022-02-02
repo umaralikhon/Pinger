@@ -17,7 +17,7 @@ public class Ping {
     private final SocketConnection connection;
     private List<Ports> portsList;
 
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 60000)
     public void pingPorts() {
         portsList = portsService.getAll();
         for (Ports p : portsList) {
