@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 import uz.ziraatbank.pinger.config.Status;
 import uz.ziraatbank.pinger.model.entity.*;
 import uz.ziraatbank.pinger.model.service.*;
+
+import java.time.LocalDateTime;
 import java.util.*;
 import static uz.ziraatbank.pinger.config.Status.*;
 
@@ -14,10 +16,11 @@ import static uz.ziraatbank.pinger.config.Status.*;
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class Ping {
     private final PortsService portsService;
+    private final PingTimeService pingTimeService;
     private final SocketConnection connection;
     private List<Ports> portsList;
 
-    @Scheduled(fixedRate = 60000)
+    @Scheduled(fixedRate = 10000)
     public void pingPorts() {
         portsList = portsService.getAll();
         for (Ports p : portsList) {
@@ -28,20 +31,28 @@ public class Ping {
                 Long start = System.currentTimeMillis();
                 Status connect = connection.tryConnect(p.getHost(), p.getPort());
                 Long end = System.currentTimeMillis();
-                Double timeOfResponse = Double.valueOf(end - start)/1000;
+                Double timeout = Double.valueOf(end - start)/1000;
 
                 if (connect == DOWN) {
-                    p.setAttempt(attempt + 1);
+                    PingTime pingTime = new PingTime();
+                    pingTime.setTime(LocalDateTime.now());
+                    pingTime.setTimeout(timeout);
+
+                    p.setAttempt(attempt+1);
                     p.setStatus(DOWN);
-                    p.setTime(timeOfResponse);
+                    p.addPingTimeToPorts(pingTime);
                     portsService.save(p);
 
                     System.out.println(p.getServiceName() + " " + p.getHost() + " " + p.getPort() + " " + "DOWN");
 
                 } else if (connect == UP) {
+                    PingTime pingTime = new PingTime();
+                    pingTime.setTime(LocalDateTime.now());
+                    pingTime.setTimeout(timeout);
+
                     p.setAttempt(0);
                     p.setStatus(UP);
-                    p.setTime(timeOfResponse);
+                    p.addPingTimeToPorts(pingTime);
                     portsService.save(p);
 
                     System.out.println(p.getServiceName() + " " + p.getHost() + " " + p.getPort() + " " + "UP");

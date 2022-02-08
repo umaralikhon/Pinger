@@ -22,6 +22,6 @@ public class PortsService {
     }
 
     public Ports save(Ports ports){
-        return portsRepository.save(ports);
+        return portsRepository.saveAndFlush(ports);
     }
 }

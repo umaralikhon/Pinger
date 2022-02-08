@@ -4,6 +4,8 @@ import lombok.*;
 import uz.ziraatbank.pinger.config.Status;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "ports")
@@ -31,20 +33,34 @@ public class Ports {
     @Column(name = "status")
     private Status status;
 
-    @Column(name = "time")
-    private Double time;
+//    @Column(name = "time")
+//    private Double time;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ports", fetch = FetchType.EAGER)
+    private List<PingTime> pingTime;
 
     public Ports(){
+        this.pingTime = new ArrayList<>();
         this.attempt = 0;
         this.status = Status.DOWN;
-        this.time = 0.0;
     }
 
 
     public Ports(String serviceName, String host, Integer port){
-        this();
+        this.pingTime = new ArrayList<>();
+        this.attempt = 0;
+        this.status = Status.DOWN;
         this.serviceName = serviceName;
         this.host = host;
         this.port = port;
+    }
+
+    public void addPingTimeToPorts(PingTime pingTime){
+        if(this.pingTime == null){
+            this.pingTime = new ArrayList<>();
+        }
+
+        this.pingTime.add(pingTime);
+        pingTime.setPorts(this);
     }
 }
