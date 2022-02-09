@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <title>Графики ЁПТА</title>
+</head>
+<body>
+<div>
+    <canvas id="myChart"></canvas>
+</div>
+
+<script th:inline="javascript">
+    const labels = [[${times}]];
+    const timeouts = [[${timeouts}]];
+
+    console.log(labels);
+    console.log(timeouts);
+
+    const data = {
+        labels: labels,
+        datasets: [{
+            label: 'Dataset',
+            backgroundColor: 'rgb(10,184,82)',
+            borderColor: 'rgb(239,114,4)',
+            data: timeouts
+        }]
+    };
+
+    const config = {
+        type: 'line',
+        data: data,
+        options: {},
+    };
+
+    const myChart = new Chart(
+        document.getElementById('myChart'),
+        config
+    );
+</script>
+
+</body>
+</html>

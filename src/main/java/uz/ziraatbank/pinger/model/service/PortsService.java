@@ -24,4 +24,8 @@ public class PortsService {
     public Ports save(Ports ports){
         return portsRepository.saveAndFlush(ports);
     }
+
+    public Ports findByServiceName(String serviceName){
+        return portsRepository.findByServiceName(serviceName);
+    }
 }

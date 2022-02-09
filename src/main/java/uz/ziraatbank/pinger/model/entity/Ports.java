@@ -33,9 +33,8 @@ public class Ports {
     @Column(name = "status")
     private Status status;
 
-//    @Column(name = "time")
-//    private Double time;
-
+    private Double lastTimeout;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ports", fetch = FetchType.EAGER)
     private List<PingTime> pingTime;
 
@@ -50,6 +49,7 @@ public class Ports {
         this.pingTime = new ArrayList<>();
         this.attempt = 0;
         this.status = Status.DOWN;
+        this.lastTimeout = 0.0;
         this.serviceName = serviceName;
         this.host = host;
         this.port = port;

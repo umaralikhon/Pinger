@@ -17,16 +17,7 @@ import java.io.IOException;
 @EnableScheduling
 public class PingerApplication {
 
-    public static void main(String[] args) throws TelegramApiException, IOException {
-//        TelegaConfig myBot = new TelegaConfig();
-//        TelegramBotsApi telegramBot = new TelegramBotsApi(DefaultBotSession.class);
-//
-//        try {
-//            telegramBot.registerBot(myBot);
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//        }
-
+    public static void main(String[] args){
         SpringApplication.run(PingerApplication.class, args);
     }
 }

@@ -20,7 +20,7 @@ public class Ping {
     private final SocketConnection connection;
     private List<Ports> portsList;
 
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRateString = "PT10S")
     public void pingPorts() {
         portsList = portsService.getAll();
         for (Ports p : portsList) {
@@ -40,6 +40,7 @@ public class Ping {
 
                     p.setAttempt(attempt+1);
                     p.setStatus(DOWN);
+                    p.setLastTimeout(timeout);
                     p.addPingTimeToPorts(pingTime);
                     portsService.save(p);
 
@@ -52,6 +53,7 @@ public class Ping {
 
                     p.setAttempt(0);
                     p.setStatus(UP);
+                    p.setLastTimeout(timeout);
                     p.addPingTimeToPorts(pingTime);
                     portsService.save(p);
 

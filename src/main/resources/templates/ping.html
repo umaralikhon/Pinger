@@ -18,6 +18,7 @@
 </div>
 <div>
     <table id="ping_table" th:border="5px">
+
         <tr>
             <th class="table_head">Name</th>
             <th class="table_head">Host</th>
@@ -25,7 +26,12 @@
             <th class="table_head">Status</th>
             <th class="table_head">Timeout</th>
         </tr>
-        <th:block th:each="ports: ${ports}">
+        <th:block id="service" th:each="ports: ${ports}">
+            <form th:id="'myForm'" th:action="@{/charts/{id}(id=${ports.id})}"></form>
+            <!--            <c:url var="chartButton" value="/charts">-->
+            <!--                <c: param name = "serviceId" value="{ports.id}"/>-->
+            <!--            </c:url>-->
+
             <tr>
                 <td id="service_td" th:text="${ports.serviceName}" bgcolor="#6495ed">SERVICE</td>
                 <td id="host_td" th:text="${ports.host}">HOST</td>
@@ -42,22 +48,28 @@
                         <td class="stat" bgcolor="gray">OFF</td>
                     </th:block>
                 </th:block>
-<!--                <td id="time_td" th:text="${ports.time}">0.0</td>-->
+                <td id="time_td" th:text="${ports.lastTimeout}">0.0</td>
+                <td id="chart_td">
+                    <a th:href="@{/charts/{serviceName}(serviceName = ${ports.serviceName})}">
+                        <input class="button" type="button" value="Графики">
+                    </a>
+                </td>
             </tr>
         </th:block>
     </table>
 </div>
 <br>
 <div>
-    <input class="button" type="button" value="Add" onclick="window.location.href='add-service'">
-    <input class="button" type="button" value="Delete" onclick="window.location.href='delete-service'">
+    <input class="button" type="button" value="Добавить" onclick="window.location.href='add-service'">
+    <input class="button" type="button" value="Удалить" onclick="window.location.href='delete-service'">
+    <input class="button" type="button" value="Графики" onClick="window.location.href='charts'">
 </div>
 
 
 <script>
     setTimeout(function () {
         window.location.reload(1);
-    }, 10000);
+    }, 60000);
 </script>
 
 </body>
