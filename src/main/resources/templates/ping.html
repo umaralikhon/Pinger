@@ -27,11 +27,6 @@
             <th class="table_head">Timeout</th>
         </tr>
         <th:block id="service" th:each="ports: ${ports}">
-            <form th:id="'myForm'" th:action="@{/charts/{id}(id=${ports.id})}"></form>
-            <!--            <c:url var="chartButton" value="/charts">-->
-            <!--                <c: param name = "serviceId" value="{ports.id}"/>-->
-            <!--            </c:url>-->
-
             <tr>
                 <td id="service_td" th:text="${ports.serviceName}" bgcolor="#6495ed">SERVICE</td>
                 <td id="host_td" th:text="${ports.host}">HOST</td>
@@ -53,6 +48,12 @@
                     <a th:href="@{/charts/{serviceName}(serviceName = ${ports.serviceName})}">
                         <input class="button" type="button" value="Графики">
                     </a>
+                    <a th:href="@{/history/{serviceName}(serviceName = ${ports.serviceName})}">
+                        <input class="button" type="button" value="История">
+                    </a>
+                    <a th:href="@{/delete/{id}(id = ${ports.id})}">
+                        <input class="button" type="button" value="Удалить">
+                    </a>
                 </td>
             </tr>
         </th:block>
@@ -61,8 +62,6 @@
 <br>
 <div>
     <input class="button" type="button" value="Добавить" onclick="window.location.href='add-service'">
-    <input class="button" type="button" value="Удалить" onclick="window.location.href='delete-service'">
-    <input class="button" type="button" value="Графики" onClick="window.location.href='charts'">
 </div>
 
 

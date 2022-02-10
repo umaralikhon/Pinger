@@ -1,10 +1,10 @@
 server:
-  port: 3334
+  port: 3333
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/my_db
-    username: postgres
+    url: jdbc:postgresql://localhost:5432/pinger
+    username: umaralikhon
     password: 1111
 
   jpa:

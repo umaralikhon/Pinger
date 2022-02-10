@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/history.css}" rel="stylesheet"/>
+    <title>History</title>
+</head>
+<body>
+<th:block th:each="history: ${history}">
+
+    <table id="history_table">
+        <tr>
+            <td id="history_serviceName" th:text="${history.serviceName}">SERVICE</td>
+            <td id="history_host" th:text="${history.host}">HOST</td>
+            <td id="history_port" th:text="${history.port}">PORT</td>
+            <td id="history_time" th:text="${history.time}">0.0</td>
+            <th:block th:switch="${history.status.name}">
+                <th:block id="status_up" th:case="UP">
+                    <td class="history_status" bgcolor="#7cfc00">
+                        <pre>  UP  </pre>
+                    </td>
+                </th:block>
+                <th:block id="status_down" th:case="DOWN">
+                    <td class="history_status" bgcolor="red">DOWN</td>
+                </th:block>
+            </th:block>
+        </tr>
+    </table>
+</th:block>
+<br>
+<span>
+    <a id="cleanBtn" th:href="@{/history/delete/{serviceName}(serviceName = ${history[0].serviceName})}">
+        <input type="button" value="Очистить">
+    </a>
+</span>
+
+<script>
+    setTimeout(function () {
+        window.location.reload(1);
+    }, 60000);
+</script>
+
+</body>
+</html>

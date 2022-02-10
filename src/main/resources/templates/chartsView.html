@@ -2,26 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!--    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>-->
 
-    <title>Графики ЁПТА</title>
+    <title>Charts</title>
 </head>
 <body>
 <div>
     <canvas id="myChart"></canvas>
 </div>
 
+<script src="/js/canvasjs.min.js"></script>
 <script th:inline="javascript">
     const labels = [[${times}]];
     const timeouts = [[${timeouts}]];
-
-    console.log(labels);
-    console.log(timeouts);
+    const serviceName = [[${serviceName}]]
 
     const data = {
         labels: labels,
         datasets: [{
-            label: 'Dataset',
+            label: serviceName,
             backgroundColor: 'rgb(10,184,82)',
             borderColor: 'rgb(239,114,4)',
             data: timeouts
@@ -38,6 +37,15 @@
         document.getElementById('myChart'),
         config
     );
+</script>
+
+<!--<script type="text/javascript" th:src="@{/js/Chart.js}"></script>-->
+<!--<script type="text/javascript" th:src="@{/js/canvasjs.min.js}"></script>-->
+
+<script>
+    setTimeout(function () {
+        window.location.reload(1);
+    }, 60000);
 </script>
 
 </body>

@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface PingTimeRepository extends JpaRepository<PingTime, Long> {
     List<PingTime> findAllByTimeBetween(LocalDateTime startTime, LocalDateTime endTime);
+    void deleteAllByTimeBefore(LocalDateTime beforeDays);
 
 }

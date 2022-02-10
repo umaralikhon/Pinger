@@ -3,6 +3,10 @@
     border-radius: 20px;
 }
 
+#ping_table tr{
+    line-height: 14px;
+}
+
 table {
     border-collapse: collapse;
     border-style: hidden;
@@ -10,11 +14,12 @@ table {
 
 table td, table th {
     border: 3px lightskyblue inset;
+
 }
 
 #service_td{
-    width: 250px;
-    height: 150px;
+    width: 320px;
+    height: 130px;
     text-align: center;
     font-size: 50px;
     font-weight: bold;
@@ -24,7 +29,7 @@ table td, table th {
 
 #host_td{
     width: 350px;
-    height: 150px;
+    height: 130px;
     text-align: center;
     font-size: 35px;
     font-weight: bold;
@@ -32,7 +37,7 @@ table td, table th {
 
 #port_td{
     width: 150px;
-    height: 150px;
+    height: 130px;
     text-align: center;
     font-size: 35px;
     font-weight: bold;
@@ -40,7 +45,7 @@ table td, table th {
 
 #graphic_td{
     width: 500px;
-    height: 150px;
+    height: 130px;
     text-align: center;
     font-size: 35px;
     font-weight: bold;
@@ -49,7 +54,7 @@ table td, table th {
 
 #time_td{
     width: 100px;
-    height: 150px;
+    height: 130px;
     text-align: center;
     font-size: 35px;
     font-weight: bold;
