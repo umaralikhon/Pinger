@@ -3,6 +3,7 @@ package uz.ziraatbank.pinger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 /**
  * @Aauthor Umaralikhon Kayumov
@@ -12,7 +13,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class PingerApplication {
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws TelegramApiException {
         SpringApplication.run(PingerApplication.class, args);
     }
 }

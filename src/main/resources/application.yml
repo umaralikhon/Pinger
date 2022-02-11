@@ -1,22 +1,3 @@
-server:
-  port: 3333
-
 spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/pinger
-    username: umaralikhon
-    password: 1111
-
-  jpa:
-    show-sql: on
-    generate-ddl: on
-    hibernate:
-      ddl-auto: update
-
-telega:
-  token: '2012688061:AAGAKCuvyjWB3J2LG4WS8zpN8FAhI4KzVwU'
-  name: '@pingerrbot'
-  chat-ids:
-    - '-1001305998309'
-    - '1878896080'
-    - '1642507256'
+  profiles:
+    active: prod

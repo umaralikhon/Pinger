@@ -26,7 +26,7 @@ public class PingTimeService {
 
     public List<String> getTimes(String serviceName) {
         Ports port = portsService.findByServiceName(serviceName);
-        List<PingTime> timeList = pingTimeRepo.findAllByTimeBetween(LocalDateTime.now().minusMinutes(90), LocalDateTime.now());
+        List<PingTime> timeList = pingTimeRepo.findAllByTimeBetween(LocalDateTime.now().minusMinutes(120), LocalDateTime.now());
         List<String> times = new ArrayList<>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
@@ -41,7 +41,7 @@ public class PingTimeService {
 
     public List<String> getTimeouts(String serviceName) {
         Ports port = portsService.findByServiceName(serviceName);
-        List<PingTime> timeoutList = pingTimeRepo.findAllByTimeBetween(LocalDateTime.now().minusMinutes(90), LocalDateTime.now());
+        List<PingTime> timeoutList = pingTimeRepo.findAllByTimeBetween(LocalDateTime.now().minusMinutes(120), LocalDateTime.now());
         List<String> timeouts = new ArrayList<>();
 
 

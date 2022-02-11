@@ -14,6 +14,8 @@ import java.util.List;
 public class TelegaProperties {
 
     private String token;
-    private String name;
-    private List<String> chatIds;
+    private String botName;
+    private String baseQueryUrl;
+    private String baseMethodUrl;
+    private String chatId;
 }

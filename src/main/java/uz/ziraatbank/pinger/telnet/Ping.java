@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import uz.ziraatbank.pinger.config.Status;
 import uz.ziraatbank.pinger.model.entity.*;
 import uz.ziraatbank.pinger.model.service.*;
-
+import uz.ziraatbank.pinger.telegram.MessageMaker;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -20,10 +20,12 @@ public class Ping {
     private final PortsService portsService;
     private final SocketConnection connection;
     private final DownHistoryService historyService;
+    private final MessageMaker messageMaker;
     private List<Ports> portsList;
 
-    @Scheduled(fixedRateString = "PT1M")
+    @Scheduled(fixedRateString = "PT5M")
     public void pingPorts() throws InterruptedException {
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
         portsList = portsService.findAll();
 
@@ -47,9 +49,11 @@ public class Ping {
                     p.setLastTimeout(timeout);
                     p.addPingTimeToPorts(pingTime);
 
+
                     if (!p.getRegistered()) {
                         p.setRegistered(true);
                         historyService.saveItems(p.getServiceName(), p.getHost(), p.getPort(), LocalDateTime.now().format(formatter), DOWN);
+                        messageMaker.sendMessage(p.getServiceName(), LocalDateTime.now().format(formatter), p.getHost(), p.getPort(), DOWN);
                     }
                     portsService.save(p);
 
@@ -66,7 +70,9 @@ public class Ping {
                     if (p.getRegistered()) {
                         p.setRegistered(false);
                         historyService.saveItems(p.getServiceName(), p.getHost(), p.getPort(), LocalDateTime.now().format(formatter), UP);
+                        messageMaker.sendMessage(p.getServiceName(), LocalDateTime.now().format(formatter), p.getHost(), p.getPort(), UP);
                     }
+
                     portsService.save(p);
                 }
             }
