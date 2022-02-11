@@ -18,17 +18,17 @@ public class MessageMaker {
 
         String baseMessage = "" +
                 "\uD83D\uDCCCService: %s\n" +
-                "\uD83D\uDEA9Status:   Up %s\n" +
+                "\uD83D\uDEA9Status:   %s %s\n" +
                 "\uD83D\uDCC5Date:      %s\n" +
                 "\uD83D\uDCDDDesc:      %s %s at port %s";
 
         if (status.equals(Status.UP)) {
-            String text = String.format(baseMessage, serviceName, "✅", time, host, "START", port);
+            String text = String.format(baseMessage, serviceName, status, "✅", time, host, "START", port);
             request.setChatId(Long.valueOf(telegaProps.getChatId()));
             request.setText(text);
             telegaService.sendMessage(request);
         } else {
-            String text = String.format(baseMessage, serviceName, "❌", time, host, "DOWN", port);
+            String text = String.format(baseMessage, serviceName, status, "❌", time, host, "DOWN", port);
             request.setChatId(Long.valueOf(telegaProps.getChatId()));
             request.setText(text);
             telegaService.sendMessage(request);

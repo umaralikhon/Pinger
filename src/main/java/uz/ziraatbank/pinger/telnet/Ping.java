@@ -72,7 +72,6 @@ public class Ping {
                         historyService.saveItems(p.getServiceName(), p.getHost(), p.getPort(), LocalDateTime.now().format(formatter), UP);
                         messageMaker.sendMessage(p.getServiceName(), LocalDateTime.now().format(formatter), p.getHost(), p.getPort(), UP);
                     }
-
                     portsService.save(p);
                 }
             }
