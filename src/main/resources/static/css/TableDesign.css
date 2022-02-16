@@ -70,6 +70,14 @@ table td, table th {
     text-align: center;
 }
 
+#source_td{
+    width: 100px;
+    height: 130px;
+    text-align: center;
+    font-size: 35px;
+    font-weight: bold;
+}
+
 
 
 

@@ -1,4 +1,4 @@
-package uz.ziraatbank.pinger.config;
+package uz.ziraatbank.pinger.model.entity;
 
 public enum Status {
     UP,

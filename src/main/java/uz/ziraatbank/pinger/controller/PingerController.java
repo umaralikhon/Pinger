@@ -14,7 +14,7 @@ import java.util.*;
 
 @Controller
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
-public class MyController {
+public class PingerController {
 
     private final PingTimeService pingTimeService;
     private final PortsService portsService;

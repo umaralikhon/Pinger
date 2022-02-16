@@ -2,14 +2,14 @@ package uz.ziraatbank.pinger.telegram;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import uz.ziraatbank.pinger.config.Status;
-import uz.ziraatbank.pinger.config.TelegaProperties;
+import uz.ziraatbank.pinger.model.entity.Status;
+import uz.ziraatbank.pinger.config.Properties;
 
 @Service
 @AllArgsConstructor
 public class MessageMaker {
 
-    private final TelegaProperties telegaProps;
+    private final Properties telegaProps;
     private final TelegaService telegaService;
 
     public void sendMessage(String serviceName, String time, String host, Integer port, Status status) {

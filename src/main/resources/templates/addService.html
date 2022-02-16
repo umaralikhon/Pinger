@@ -12,14 +12,21 @@
 <body>
 
 <div class="addForm">
-    <form action="save-service" modelAttribute="service" method="post">
+    <form action="save-service" modelAttribute="service" method="post" th:object="${service}">
         <label>Service name:</label><br>
         <input type="text" path="serviceName" name="serviceName"><br>
         <label>Host:</label><br>
         <input type="text" path="host" name="host"><br>
         <label>Port:</label><br>
-        <input type="text" path="port" name="port"><br><br>
-        <input type="submit" value="Ok">
+        <input type="text" path="port" name="port"><br>
+        <label>Source:</label><br>
+
+        <div th:each="source: ${T(uz.ziraatbank.pinger.model.entity.Source).values()}">
+            <input type="radio" th:field="*{source}" th:value="${source}">
+            <label th:for="${#ids.prev('source')}" th:text="${source}">Source</label>
+        </div><br>
+
+        <input type="submit" value="Добавить">
     </form>
 </div>
 

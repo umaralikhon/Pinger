@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://172.18.10.235:5432/pinger
+    username: umaralikhon
+    password: 1111
+
+  jpa:
+    show-sql: on
+    generate-ddl: on
+    hibernate:
+      ddl-auto: update
+
+props:
+  token: '2012688061:AAEqzwRUe96NtnEaUK93byXM_QMvP_UDblw'
+  base-query-url: 'https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s'
+  base-method-url: 'https://api.telegram.org/bot%s/%s'
+  bot-name: '@pingerrbot'
+  chat-id: '-1001779262179'
+
+  source: 'BUS'

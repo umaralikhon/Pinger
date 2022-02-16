@@ -1,7 +1,6 @@
 package uz.ziraatbank.pinger.model.entity;
 
 import lombok.*;
-import uz.ziraatbank.pinger.config.Status;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -14,28 +13,23 @@ import java.util.List;
 public class Ports {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
-    @Column(name = "service_name")
     private String serviceName;
 
-
-    @Column(name = "host")
     private String host;
 
-    @Column(name = "port")
     private Integer port;
 
-    @Column(name = "attempt")
     private Integer attempt;
 
-    @Column(name = "status")
     private Status status;
 
     private Double lastTimeout;
 
     private Boolean registered;
+
+    private Source source;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ports", fetch = FetchType.EAGER)
     private List<PingTime> pingTime;
@@ -45,6 +39,7 @@ public class Ports {
         this.attempt = 0;
         this.status = Status.DOWN;
         this.registered = false;
+        this.source = Source.BUS;
     }
 
 

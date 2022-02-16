@@ -25,6 +25,7 @@
             <th class="table_head">Port</th>
             <th class="table_head">Status</th>
             <th class="table_head">Timeout</th>
+            <th class="table_head">Server</th>
         </tr>
         <th:block id="service" th:each="ports: ${ports}">
             <tr>
@@ -44,6 +45,7 @@
                     </th:block>
                 </th:block>
                 <td id="time_td" th:text="${ports.lastTimeout}">0.0</td>
+                <td id="source_td" style="font-size:30px; font-weight: bold; text-align: center" th:text="${ports.source.name}">SOURCE</td>
                 <td id="chart_td">
                     <a th:href="@{/charts/{serviceName}(serviceName = ${ports.serviceName})}">
                         <input class="button" type="button" value="Графики">

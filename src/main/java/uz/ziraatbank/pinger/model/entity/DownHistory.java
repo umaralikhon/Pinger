@@ -3,7 +3,6 @@ package uz.ziraatbank.pinger.model.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import uz.ziraatbank.pinger.config.Status;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

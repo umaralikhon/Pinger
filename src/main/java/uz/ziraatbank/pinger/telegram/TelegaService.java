@@ -4,22 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import uz.ziraatbank.pinger.config.Status;
-import uz.ziraatbank.pinger.config.TelegaProperties;
-
-import java.io.*;
-import java.net.URL;
-import java.net.URLConnection;
+import uz.ziraatbank.pinger.config.Properties;
 
 @Service
 @AllArgsConstructor
 @Data
 public class TelegaService {
 
-    private final TelegaProperties properties;
+    private final Properties properties;
     private final RestTemplate restTemplate;
 
     public TelegaMessageResponseDto sendMessage(TelegaMessageRequestDto request) {

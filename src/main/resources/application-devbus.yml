@@ -1,10 +1,7 @@
-server:
-  port: 3333
-
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/pinger
-    username: umaralikhon
+    username: postgres
     password: 1111
 
   jpa:
@@ -13,9 +10,11 @@ spring:
     hibernate:
       ddl-auto: update
 
-telega:
-  token: '2012688061:AAEqzwRUe96NtnEaUK93byXM_QMvP_UDblw'
+props:
+  token: '5166863912:AAFPHVV-iQo3xpYDjQXXaIgFyzBNRreaRjA'
   base-query-url: 'https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s'
   base-method-url: 'https://api.telegram.org/bot%s/%s'
-  bot-name: '@pingerrbot'
-  chat-id: '-1001779262179'
+  bot-name: '@Piner_test_bot'
+  chat-id: '-1001671571597'
+
+  source: 'BUS'

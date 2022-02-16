@@ -4,15 +4,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import uz.ziraatbank.pinger.config.Status;
+import uz.ziraatbank.pinger.config.Properties;
+import uz.ziraatbank.pinger.model.entity.Status;
 import uz.ziraatbank.pinger.model.entity.*;
 import uz.ziraatbank.pinger.model.service.*;
 import uz.ziraatbank.pinger.telegram.MessageMaker;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.List;
 
-import static uz.ziraatbank.pinger.config.Status.*;
+import static uz.ziraatbank.pinger.model.entity.Status.*;
 
 @Component
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
@@ -22,6 +23,7 @@ public class Ping {
     private final DownHistoryService historyService;
     private final MessageMaker messageMaker;
     private List<Ports> portsList;
+    private final Properties properties;
 
     @Scheduled(fixedRateString = "PT5M")
     public void pingPorts() throws InterruptedException {
@@ -32,51 +34,54 @@ public class Ping {
         for (Ports p : portsList) {
             int attempt = p.getAttempt();
 
-            if (p.getStatus() != OFF) {
+            if (p.getSource().name().equalsIgnoreCase(properties.getSource())) {
 
-                Long start = System.currentTimeMillis();
-                Status connect = connection.tryConnect(p.getHost(), p.getPort());
-                Long end = System.currentTimeMillis();
-                Double timeout = Double.valueOf(end - start) / 1000;
+                if (p.getStatus() != OFF) {
 
-                if (connect == DOWN) {
-                    PingTime pingTime = new PingTime();
-                    pingTime.setTime(LocalDateTime.now());
-                    pingTime.setTimeout(timeout);
+                    Long start = System.currentTimeMillis();
+                    Status connect = connection.tryConnect(p.getHost(), p.getPort());
+                    Long end = System.currentTimeMillis();
+                    Double timeout = Double.valueOf(end - start) / 1000;
 
-                    p.setAttempt(attempt + 1);
-                    p.setStatus(DOWN);
-                    p.setLastTimeout(timeout);
-                    p.addPingTimeToPorts(pingTime);
+                    if (connect == DOWN) {
+                        PingTime pingTime = new PingTime();
+                        pingTime.setTime(LocalDateTime.now());
+                        pingTime.setTimeout(timeout);
+
+                        p.setAttempt(attempt + 1);
+                        p.setStatus(DOWN);
+                        p.setLastTimeout(timeout);
+                        p.addPingTimeToPorts(pingTime);
 
 
-                    if (!p.getRegistered()) {
-                        p.setRegistered(true);
-                        historyService.saveItems(p.getServiceName(), p.getHost(), p.getPort(), LocalDateTime.now().format(formatter), DOWN);
-                        messageMaker.sendMessage(p.getServiceName(), LocalDateTime.now().format(formatter), p.getHost(), p.getPort(), DOWN);
+                        if (!p.getRegistered()) {
+                            p.setRegistered(true);
+                            historyService.saveItems(p.getServiceName(), p.getHost(), p.getPort(), LocalDateTime.now().format(formatter), DOWN);
+                            messageMaker.sendMessage(p.getServiceName(), LocalDateTime.now().format(formatter), p.getHost(), p.getPort(), DOWN);
+                        }
+                        portsService.save(p);
+
+                    } else if (connect == UP) {
+                        PingTime pingTime = new PingTime();
+                        pingTime.setTime(LocalDateTime.now());
+                        pingTime.setTimeout(timeout);
+
+                        p.setAttempt(0);
+                        p.setStatus(UP);
+                        p.setLastTimeout(timeout);
+                        p.addPingTimeToPorts(pingTime);
+
+                        if (p.getRegistered()) {
+                            p.setRegistered(false);
+                            historyService.saveItems(p.getServiceName(), p.getHost(), p.getPort(), LocalDateTime.now().format(formatter), UP);
+                            messageMaker.sendMessage(p.getServiceName(), LocalDateTime.now().format(formatter), p.getHost(), p.getPort(), UP);
+                        }
+                        portsService.save(p);
                     }
-                    portsService.save(p);
-
-                } else if (connect == UP) {
-                    PingTime pingTime = new PingTime();
-                    pingTime.setTime(LocalDateTime.now());
-                    pingTime.setTimeout(timeout);
-
-                    p.setAttempt(0);
-                    p.setStatus(UP);
-                    p.setLastTimeout(timeout);
-                    p.addPingTimeToPorts(pingTime);
-
-                    if (p.getRegistered()) {
-                        p.setRegistered(false);
-                        historyService.saveItems(p.getServiceName(), p.getHost(), p.getPort(), LocalDateTime.now().format(formatter), UP);
-                        messageMaker.sendMessage(p.getServiceName(), LocalDateTime.now().format(formatter), p.getHost(), p.getPort(), UP);
-                    }
-                    portsService.save(p);
                 }
-            }
 
-            Thread.sleep(5000);
+                Thread.sleep(5000);
+            }
         }
     }
 }

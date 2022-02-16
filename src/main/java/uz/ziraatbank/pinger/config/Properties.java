@@ -5,17 +5,16 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component
 @Configuration
-@ConfigurationProperties(prefix = "telega")
+@ConfigurationProperties(prefix = "props")
 @Data
-public class TelegaProperties {
+public class Properties {
 
     private String token;
     private String botName;
     private String baseQueryUrl;
     private String baseMethodUrl;
     private String chatId;
+    private String source; //Определяет на каком сервере поднят сервис
 }
