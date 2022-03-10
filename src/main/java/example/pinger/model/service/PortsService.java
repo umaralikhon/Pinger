@@ -1,12 +1,11 @@
-package uz.ziraatbank.pinger.model.service;
+package example.pinger.model.service;
 
+import example.pinger.model.repository.PortsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import uz.ziraatbank.pinger.model.entity.Ports;
-import uz.ziraatbank.pinger.model.repository.PortsRepository;
+import example.pinger.model.entity.Ports;
 
-import javax.sound.sampled.Port;
 import java.util.List;
 import java.util.Optional;
 

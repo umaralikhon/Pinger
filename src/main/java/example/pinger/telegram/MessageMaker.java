@@ -1,9 +1,9 @@
-package uz.ziraatbank.pinger.telegram;
+package example.pinger.telegram;
 
+import example.pinger.model.entity.Status;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import uz.ziraatbank.pinger.model.entity.Status;
-import uz.ziraatbank.pinger.config.Properties;
+import example.pinger.config.Properties;
 
 @Service
 @AllArgsConstructor

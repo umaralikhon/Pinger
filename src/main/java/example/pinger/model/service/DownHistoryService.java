@@ -1,11 +1,11 @@
-package uz.ziraatbank.pinger.model.service;
+package example.pinger.model.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import uz.ziraatbank.pinger.model.entity.Status;
-import uz.ziraatbank.pinger.model.entity.DownHistory;
-import uz.ziraatbank.pinger.model.repository.DownHistoryRepo;
+import example.pinger.model.entity.Status;
+import example.pinger.model.entity.DownHistory;
+import example.pinger.model.repository.DownHistoryRepo;
 
 import java.util.List;
 

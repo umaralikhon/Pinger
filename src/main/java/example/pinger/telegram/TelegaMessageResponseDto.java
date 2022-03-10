@@ -1,4 +1,4 @@
-package uz.ziraatbank.pinger.telegram;
+package example.pinger.telegram;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

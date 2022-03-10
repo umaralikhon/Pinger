@@ -11,10 +11,10 @@ spring:
       ddl-auto: update
 
 props:
-  token: '2012688061:AAEqzwRUe96NtnEaUK93byXM_QMvP_UDblw'
+  token: '*****'
   base-query-url: 'https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s'
   base-method-url: 'https://api.telegram.org/bot%s/%s'
-  bot-name: '@pingerrbot'
-  chat-id: '-1001779262179'
+  bot-name: '@*****'
+  chat-id: '-*****'
 
   source: 'API'

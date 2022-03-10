@@ -1,4 +1,4 @@
-package uz.ziraatbank.pinger.model.entity;
+package example.pinger.model.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

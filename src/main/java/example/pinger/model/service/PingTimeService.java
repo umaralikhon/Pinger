@@ -1,11 +1,11 @@
-package uz.ziraatbank.pinger.model.service;
+package example.pinger.model.service;
 
+import example.pinger.model.repository.PingTimeRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import uz.ziraatbank.pinger.model.entity.PingTime;
-import uz.ziraatbank.pinger.model.entity.Ports;
-import uz.ziraatbank.pinger.model.repository.PingTimeRepository;
+import example.pinger.model.entity.PingTime;
+import example.pinger.model.entity.Ports;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

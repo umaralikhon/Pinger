@@ -1,19 +1,19 @@
-package uz.ziraatbank.pinger.telnet;
+package example.pinger.telnet;
 
+import example.pinger.model.entity.PingTime;
+import example.pinger.model.entity.Ports;
+import example.pinger.model.entity.Status;
+import example.pinger.model.service.DownHistoryService;
+import example.pinger.model.service.PortsService;
+import example.pinger.telegram.MessageMaker;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import uz.ziraatbank.pinger.config.Properties;
-import uz.ziraatbank.pinger.model.entity.Status;
-import uz.ziraatbank.pinger.model.entity.*;
-import uz.ziraatbank.pinger.model.service.*;
-import uz.ziraatbank.pinger.telegram.MessageMaker;
+import example.pinger.config.Properties;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-
-import static uz.ziraatbank.pinger.model.entity.Status.*;
 
 @Component
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
@@ -36,45 +36,45 @@ public class Ping {
 
             if (p.getSource().name().equalsIgnoreCase(properties.getSource())) {
 
-                if (p.getStatus() != OFF) {
+                if (p.getStatus() != Status.OFF) {
 
                     Long start = System.currentTimeMillis();
                     Status connect = connection.tryConnect(p.getHost(), p.getPort());
                     Long end = System.currentTimeMillis();
                     Double timeout = Double.valueOf(end - start) / 1000;
 
-                    if (connect == DOWN) {
+                    if (connect == Status.DOWN) {
                         PingTime pingTime = new PingTime();
                         pingTime.setTime(LocalDateTime.now());
                         pingTime.setTimeout(timeout);
 
                         p.setAttempt(attempt + 1);
-                        p.setStatus(DOWN);
+                        p.setStatus(Status.DOWN);
                         p.setLastTimeout(timeout);
                         p.addPingTimeToPorts(pingTime);
 
 
                         if (!p.getRegistered()) {
                             p.setRegistered(true);
-                            historyService.saveItems(p.getServiceName(), p.getHost(), p.getPort(), LocalDateTime.now().format(formatter), DOWN);
-                            messageMaker.sendMessage(p.getServiceName(), LocalDateTime.now().format(formatter), p.getHost(), p.getPort(), DOWN);
+                            historyService.saveItems(p.getServiceName(), p.getHost(), p.getPort(), LocalDateTime.now().format(formatter), Status.DOWN);
+                            messageMaker.sendMessage(p.getServiceName(), LocalDateTime.now().format(formatter), p.getHost(), p.getPort(), Status.DOWN);
                         }
                         portsService.save(p);
 
-                    } else if (connect == UP) {
+                    } else if (connect == Status.UP) {
                         PingTime pingTime = new PingTime();
                         pingTime.setTime(LocalDateTime.now());
                         pingTime.setTimeout(timeout);
 
                         p.setAttempt(0);
-                        p.setStatus(UP);
+                        p.setStatus(Status.UP);
                         p.setLastTimeout(timeout);
                         p.addPingTimeToPorts(pingTime);
 
                         if (p.getRegistered()) {
                             p.setRegistered(false);
-                            historyService.saveItems(p.getServiceName(), p.getHost(), p.getPort(), LocalDateTime.now().format(formatter), UP);
-                            messageMaker.sendMessage(p.getServiceName(), LocalDateTime.now().format(formatter), p.getHost(), p.getPort(), UP);
+                            historyService.saveItems(p.getServiceName(), p.getHost(), p.getPort(), LocalDateTime.now().format(formatter), Status.UP);
+                            messageMaker.sendMessage(p.getServiceName(), LocalDateTime.now().format(formatter), p.getHost(), p.getPort(), Status.UP);
                         }
                         portsService.save(p);
                     }

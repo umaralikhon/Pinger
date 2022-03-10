@@ -1,7 +1,7 @@
-package uz.ziraatbank.pinger.model.repository;
+package example.pinger.model.repository;
 
+import example.pinger.model.entity.DownHistory;
 import org.springframework.data.jpa.repository.JpaRepository;
-import uz.ziraatbank.pinger.model.entity.DownHistory;
 
 import java.util.List;
 

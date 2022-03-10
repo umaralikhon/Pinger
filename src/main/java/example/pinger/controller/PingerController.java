@@ -1,15 +1,16 @@
-package uz.ziraatbank.pinger.controller;
+package example.pinger.controller;
 
+import example.pinger.model.entity.DownHistory;
+import example.pinger.model.entity.Ports;
+import example.pinger.model.service.DownHistoryService;
+import example.pinger.model.service.PingTimeService;
+import example.pinger.model.service.PortsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import uz.ziraatbank.pinger.model.entity.DownHistory;
-import uz.ziraatbank.pinger.model.entity.Ports;
-import uz.ziraatbank.pinger.model.service.DownHistoryService;
-import uz.ziraatbank.pinger.model.service.PingTimeService;
-import uz.ziraatbank.pinger.model.service.PortsService;
+
 import java.util.*;
 
 @Controller
